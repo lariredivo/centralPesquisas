@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  /*buttons*/
+  .title-media {
+    color: #000000;
+    font-size: 25px;
+    font-family: "Sentinel SSm A", "Sentinel SSm B", "Sentinel SSm", serif;
+    text-decoration: underline;
+    justify-content: left;
+  }
+
+  .button-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button-candidatos {
+    display: flex;
+    justify-content: center;
+  }
+
+  .cyrcle-phto {
+    min-height: 60px;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+
+  .photo-candidato {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+  }
+
+  .name-candidato {
+    font: 12px "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+  }
+
+  .sigla-partido {
+    font: 12px "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+    font-weight: 700;
+  }
+
+  .wrap-ponteiro {
+    display: flex;
+    align-items: center;
+  }
+
+  .img-ponteiro {
+    width: 25px;
+    height: 33px;
+    margin-left: 15px;
+    margin-right: 11px;
+  }
+
+  .text-ponteiro {
+    font: 12px "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+    width: 45%;
+  }
+
+  .legenda {
+    display: flex;
+    justify-content: center;
+  }
+
+  .legenda-texto {
+    display: flex;
+    justify-content: left;
+    font: 12px "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+  }
+
+  /*buttons*/
+  .c3 svg {
+    font: 10px "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #chart {
+    display: flex;
+    justify-content: center;
+  }
+
+  .c3 line,
+  .c3 path {
+    fill: none;
+    stroke: #fff;
+    /*esse elemento define a linha dos eixos x e y*/
+  }
+
+  .c3 .c3-axis-x path {
+    stroke: #484848;
+    stroke-width: 2px;
+  }
+
+  /*alteração do estilo do tooltip*/
+  #chart .c3-tooltip th {
+    font-family: "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000;
+  }
+
+  #chart .c3-tooltip td {
+    font-family: "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    color: #000;
+  }
+
+  /*alteração do estilo do tooltip*/
+  .c3 .c3-axis-x line {
+    stroke: transparent;
+    fill: none;
+  }
+
+  g .tick {
+    opacity: 0;
+  }
+
+  .c3 text {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    font: 12px "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+  }
+
+  .c3-bars path,
+  .c3-event-rect,
+  .c3-legend-item-tile,
+  .c3-xgrid-focus,
+  .c3-ygrid {
+    shape-rendering: crispEdges
+  }
+
+  .c3-chart-arc path {
+    stroke: #fff
+  }
+
+  .c3-chart-arc rect {
+    stroke: #fff;
+    stroke-width: 1
+  }
+
+  .c3-chart-arc text {
+    fill: #fff;
+    font-size: 13px
+  }
+
+  .c3-grid line {
+    stroke: #aaa;
+  }
+
+  .c3-grid text {
+    fill: #aaa
+  }
+
+  .c3-xgrid,
+  .c3-ygrid {
+    stroke-dasharray: 3 3
+  }
+
+  .c3-text.c3-empty {
+    fill: grey;
+    font-size: 2em
+  }
+
+  .c3-line {
+    stroke-width: 1px;
+  }
+
+  .c3-circle {
+    fill: transparent;
+  }
+
+  .c3-circle._expanded_ {
+    stroke-width: 3px;
+    fill: white;
+    stroke: currentColor;
+  }
+
+  .c3-selected-circle {
+    fill: white;
+    stroke: currentColor;
+    stroke-width: 2px
+  }
+
+  .c3-bar {
+    stroke-width: 0
+  }
+
+  .c3-bar._expanded_ {
+    fill-opacity: 1;
+    fill-opacity: .75
+  }
+
+  .c3-target.c3-focused {
+    opacity: 1
+  }
+
+  .c3-target.c3-focused path.c3-line,
+  .c3-target.c3-focused path.c3-step {
+    stroke-width: 2px
+  }
+
+  .c3-target.c3-defocused {
+    opacity: .3 !important
+  }
+
+  .c3-region {
+    fill: #4682b4;
+    fill-opacity: .1
+  }
+
+  .c3-region text {
+    fill-opacity: 1
+  }
+
+  .c3-brush .extent {
+    fill-opacity: .1
+  }
+
+  .c3-legend-item {
+    font: 14px "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+  }
+
+  tspan {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+  }
+
+  .tick {
+    opacity: 0;
+  }
+
+  .c3-legend-item-hidden {
+    opacity: .15
+  }
+
+  .c3-legend-background {
+    opacity: .75;
+    fill: #fff;
+    stroke: #d3d3d3;
+    stroke-width: 1
+  }
+
+  .c3-title {
+    font: 14px sans-serif
+  }
+
+  .c3-tooltip-container {
+    z-index: 10
+  }
+
+  .c3-tooltip {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #fff;
+    empty-cells: show;
+    -webkit-box-shadow: 7px 7px 12px -9px #777;
+    -moz-box-shadow: 7px 7px 12px -9px #777;
+    box-shadow: 7px 7px 12px -9px #777;
+    opacity: .9
+  }
+
+  .c3-tooltip tr {
+    border: 1px solid #ccc
+  }
+
+  .c3-tooltip th {
+    background-color: #aaa;
+    font-size: 14px;
+    padding: 2px 5px;
+    text-align: left;
+    color: #fff
+  }
+
+  .c3-tooltip td {
+    font-size: 13px;
+    padding: 3px 6px;
+    background-color: #fff;
+    border-left: 1px dotted #999
+  }
+
+  .c3-tooltip td>span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 6px
+  }
+
+  .c3-tooltip .value {
+    text-align: right
+  }
+
+  .c3-area {
+    stroke-width: 0;
+    opacity: .2
+  }
+
+  .c3-chart-arcs-title {
+    dominant-baseline: middle;
+    font-size: 1.3em
+  }
+
+  .c3-chart-arcs .c3-chart-arcs-background {
+    fill: #e0e0e0;
+    stroke: #fff
+  }
+
+  .c3-chart-arcs .c3-chart-arcs-gauge-unit {
+    fill: #000;
+    font-size: 16px
+  }
+
+  .c3-chart-arcs .c3-chart-arcs-gauge-max {
+    fill: #777
+  }
+
+  .c3-chart-arcs .c3-chart-arcs-gauge-min {
+    fill: #777
+  }
+
+  .c3-chart-arc .c3-gauge-value {
+    fill: #000
+  }
+
+  .c3-chart-arc.c3-target g path {
+    opacity: 1
+  }
+
+  .c3-chart-arc.c3-target.c3-focused g path {
+    opacity: 1
+  }
+
+  .c3-drag-zoom.enabled {
+    pointer-events: all !important;
+    visibility: visible
+  }
+
+  .c3-drag-zoom.disabled {
+    pointer-events: none !important;
+    visibility: hidden
+  }
+
+  .c3-drag-zoom .extent {
+    fill-opacity: .1
+  }
+
+  #chart .c3-line-Lula,
+  .c3-line-Bolsonaro,
+  .c3-line-Janones,
+  .c3-line-Ciro,
+  .c3-line-Tebet,
+  .c3-line-BNI,
+  .c3-line-Outros {
+    stroke-width: 3px;
+  }
+
+  p.intencao {
+    font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', sans-serif;
+    font-size: 14px;
+    line-height: 12px;
+    font-weight: 700;
+    font-style: normal;
+    color: #111111;
+    margin: 40px 18px 0 20px;
+  }
+
+  #chart,
+  svg {
+    width: 750;
+    height: 515;
+  }
+
+  @media screen and (min-width: 768px) {
+
+    #chart,
+    svg {
+      width: 750;
+      height: 515;
+    }
+
+    .container {
+      box-sizing: border-box;
+      width: 750px;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+</style>
+
+<body>
+  <div class="button-wrap">
+    <h2 class="title-media">Média das intenções de votos</h2>
+  </div>
+  <div class="button-candidatos">
+    <div class="cyrcle-phto col-xs-4 col-md-1" data-candidato="Lula">
+      <div><img class="img-circle photo-candidato" src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/08/01/Lula.png"></div>
+      <div><span class="name-candidato">Lula<br><span class="sigla-partido" style="color:#FC6063">(PT)</span></span></div>
+    </div>
+
+    <div class="cyrcle-phto col-xs-4 col-md-1" data-candidato="Bolsonaro">
+      <div><img class="img-circle photo-candidato" src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/08/01/Bolsonaro.png"></div>
+      <div><span class="name-candidato">Bolsonaro<br><span class="sigla-partido" style="color: #6B74A5">(PL)</span></span></div>
+    </div>
+
+    <div class="cyrcle-phto col-xs-4 col-md-1" data-candidato="Ciro">
+      <div><img class="img-circle photo-candidato" src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/08/01/Ciro.png"></div>
+      <div><span class="name-candidato">Ciro<br><span class="sigla-partido" style="color: #BE5A5C">(PDT)</span></span></div>
+    </div>
+
+    <div class="cyrcle-phto col-xs-4 col-md-1" data-candidato="Tebet">
+      <div><img class="img-circle photo-candidato" src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/08/01/Tebet.png"></div>
+      <div><span class="name-candidato">Tebet<br><span class="sigla-partido" style="color: #FBCB30">(MDB)</span></span></div>
+    </div>
+
+    <div class="cyrcle-phto col-xs-4 col-md-1" data-candidato="Outros">
+      <div><img class="img-circle photo-candidato" src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/08/01/Outros.png"></div>
+      <div><span class="name-candidato">Outros<br>candidatos</span></div>
+    </div>
+
+    <div class="cyrcle-phto col-xs-4 col-md-1" data-candidato="BNI">
+      <div><img class="img-circle photo-candidato" src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/08/01/BNI.png"></div>
+      <div><span class="name-candidato">BNI*</span></div>
+    </div>
+
+    <div class="wrap-ponteiro">
+      <img src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/08/01/ponteiro.png" alt="ícone de cursos de mão" class="img-ponteiro">
+      <p class="text-ponteiro">clique no candidato para retirá-lo do gráfico</p>
+    </div>
+  </div>
+  <div class="legenda">
+    <p class="legenda-texto">*Brancos, nulos e indecisos</p>
+  </div>
+
+
+  <div class="container">
+    <p class="intencao">% de intenção de voto</p>
+    <div id="chart"></div>
+  </div>
+
+  <!-- Load d3.js and c3.js -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://assets.shared.cloud.nexojornal.com.br/graficos/2022/06/01/teste-C3/c3.min.js"></script>
+  <script>
+    var chart = c3.generate({
+      bindto: '#chart',
+      data: {
+        x: 'x',
+        // xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
+        columns: [
+          [
+            'x',
+            '2022-03-04',
+            '2022-03-05',
+            '2022-03-06',
+            '2022-03-07',
+            '2022-03-08',
+            '2022-03-09',
+            '2022-03-10',
+            '2022-03-11',
+            '2022-03-12',
+            '2022-03-13',
+            '2022-03-14',
+            '2022-03-15',
+            '2022-03-16',
+            '2022-03-17',
+            '2022-03-18',
+            '2022-03-19',
+            '2022-03-20',
+            '2022-03-21',
+            '2022-03-22',
+            '2022-03-23',
+            '2022-03-24',
+            '2022-03-25',
+            '2022-03-26',
+            '2022-03-27',
+            '2022-03-28',
+            '2022-03-29',
+            '2022-03-30',
+            '2022-03-31',
+            '2022-04-01',
+            '2022-04-02',
+            '2022-04-03',
+            '2022-04-04',
+            '2022-04-05',
+            '2022-04-06',
+            '2022-04-07',
+            '2022-04-08',
+            '2022-04-09',
+            '2022-04-10',
+            '2022-04-11',
+            '2022-04-12',
+            '2022-04-13',
+            '2022-04-14',
+            '2022-04-15',
+            '2022-04-16',
+            '2022-04-17',
+            '2022-04-18',
+            '2022-04-19',
+            '2022-04-20',
+            '2022-04-21',
+            '2022-04-22',
+            '2022-04-23',
+            '2022-04-24',
+            '2022-04-25',
+            '2022-04-26',
+            '2022-04-27',
+            '2022-04-28',
+            '2022-04-29',
+            '2022-04-30',
+            '2022-05-01',
+            '2022-05-02',
+            '2022-05-03',
+            '2022-05-04',
+            '2022-05-05',
+            '2022-05-06',
+            '2022-05-07',
+            '2022-05-08',
+            '2022-05-09',
+            '2022-05-10',
+            '2022-05-11',
+            '2022-05-12',
+            '2022-05-13',
+            '2022-05-14',
+            '2022-05-15'
+          ],
+          // ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+          [
+            'Bolsonaro',
+            28,
+            27.978,
+            27.956,
+            27,
+            27.933,
+            27.911,
+            27.889,
+            27.867,
+            27.844,
+            27.822,
+            27.8,
+            27.778,
+            27.756,
+            27.733,
+            27.711,
+            27.689,
+            27.667,
+            27.644,
+            27.622,
+            27.6,
+            27.578,
+            27.556,
+            27.533,
+            27.511,
+            27.489,
+            27.467,
+            27.444,
+            27.422,
+            27.4,
+            27.378,
+            27.356,
+            27.333,
+            27.311,
+            27.289,
+            27.267,
+            27.244,
+            27.222,
+            27.2,
+            27.178,
+            27.156,
+            27.133,
+            27.111,
+            27.089,
+            27.067,
+            27.044,
+            27.022,
+            27.0,
+            27,
+            27.5,
+            28.0,
+            28.5,
+            29.0,
+            29.5,
+            30.0,
+            30.5,
+            31.0,
+            31,
+            30.25,
+            29.5,
+            28.75,
+            28.0,
+            28,
+            28.286,
+            28.571,
+            28.857,
+            29.143,
+            29.429,
+            29.714,
+            30.0,
+            30,
+            29.667,
+            29.333,
+            29.0,
+            29
+          ],
+          [
+            'Lula',
+            43,
+            42.978,
+            42.956,
+            42.933,
+            42.911,
+            42.889,
+            42.867,
+            42.844,
+            42.822,
+            42.8,
+            42.778,
+            42.756,
+            42.733,
+            42.711,
+            42.689,
+            42.667,
+            42.644,
+            42.622,
+            42.6,
+            42.578,
+            42.556,
+            42.533,
+            42.511,
+            42.489,
+            42.467,
+            42.444,
+            42.422,
+            42.4,
+            42.378,
+            42.356,
+            42.333,
+            42.311,
+            42.289,
+            42.267,
+            42.244,
+            42.222,
+            42.2,
+            42.178,
+            42.156,
+            42.133,
+            42.111,
+            42.089,
+            42.067,
+            42.044,
+            42.022,
+            42.0,
+            42,
+            41.5,
+            41.0,
+            40.5,
+            40.0,
+            39.5,
+            39.0,
+            38.5,
+            38.0,
+            38,
+            38.75,
+            39.5,
+            40.25,
+            41.0,
+            41,
+            40.857,
+            40.714,
+            40.571,
+            40.429,
+            40.286,
+            40.143,
+            40.0,
+            40,
+            40.0,
+            40.0,
+            40.0,
+            40
+          ],
+          [
+            'Ciro',
+            6,
+            6.022,
+            6.044,
+            6.067,
+            6.089,
+            6.111,
+            6.133,
+            6.156,
+            6.178,
+            6.2,
+            6.222,
+            6.244,
+            6.267,
+            6.289,
+            6.311,
+            6.333,
+            6.356,
+            6.378,
+            6.4,
+            6.422,
+            6.444,
+            6.467,
+            6.489,
+            6.511,
+            6.533,
+            6.556,
+            6.578,
+            6.6,
+            6.622,
+            6.644,
+            6.667,
+            6.689,
+            6.711,
+            6.733,
+            6.756,
+            6.778,
+            6.8,
+            6.822,
+            6.844,
+            6.867,
+            6.889,
+            6.911,
+            6.933,
+            6.956,
+            6.978,
+            7.0,
+            7,
+            7.0,
+            7.0,
+            7.0,
+            7.0,
+            7.0,
+            7.0,
+            7.0,
+            7.0,
+            7,
+            7.75,
+            8.5,
+            9.25,
+            10.0,
+            10,
+            9.571,
+            9.143,
+            8.714,
+            8.286,
+            7.857,
+            7.429,
+            7.0,
+            7,
+            7.333,
+            7.667,
+            8.0,
+            8
+          ],
+          [
+            'Tebet',
+            3,
+            3.044,
+            3.089,
+            3.133,
+            3.178,
+            3.222,
+            3.267,
+            3.311,
+            3.356,
+            3.4,
+            3.444,
+            3.489,
+            3.533,
+            3.578,
+            3.622,
+            3.667,
+            3.711,
+            3.756,
+            3.8,
+            3.844,
+            3.889,
+            3.933,
+            3.978,
+            4.022,
+            4.067,
+            4.111,
+            4.156,
+            4.2,
+            4.244,
+            4.289,
+            4.333,
+            4.378,
+            4.422,
+            4.467,
+            4.511,
+            4.556,
+            4.6,
+            4.644,
+            4.689,
+            4.733,
+            4.778,
+            4.822,
+            4.867,
+            4.911,
+            4.956,
+            5.0,
+            5,
+            4.225,
+            4.25,
+            3.875,
+            3.5,
+            3.125,
+            2.75,
+            2.375,
+            2.0,
+            2,
+            2.5,
+            3.0,
+            3.5,
+            4.0,
+            4,
+            4.143,
+            4.286,
+            4.429,
+            4.571,
+            4.714,
+            4.857,
+            5.0,
+            5,
+            4.333,
+            3.667,
+            3.0,
+            3
+          ],
+          [
+            'Outros',
+            4,
+            3.978,
+            3.956,
+            3.933,
+            3.911,
+            3.889,
+            3.867,
+            3.844,
+            3.822,
+            3.8,
+            3.778,
+            3.756,
+            3.733,
+            3.711,
+            3.689,
+            3.667,
+            3.644,
+            3.622,
+            3.6,
+            3.578,
+            3.556,
+            3.533,
+            3.511,
+            3.489,
+            3.467,
+            3.444,
+            3.422,
+            3.4,
+            3.378,
+            3.356,
+            3.333,
+            3.311,
+            3.289,
+            3.267,
+            3.244,
+            3.222,
+            3.2,
+            3.178,
+            3.156,
+            3.133,
+            3.111,
+            3.089,
+            3.067,
+            3.044,
+            3.022,
+            3.0,
+            3,
+            2.75,
+            2.5,
+            2.25,
+            2.0,
+            1.75,
+            1.5,
+            1.25,
+            1.0,
+            1,
+            1.5,
+            2.0,
+            2.5,
+            3.0,
+            3,
+            2.857,
+            2.714,
+            2.571,
+            2.429,
+            2.286,
+            2.143,
+            2.0,
+            2,
+            2.0,
+            2.0,
+            2.0,
+            2
+          ],
+          [
+            'BNI',
+            16,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16.0,
+            16,
+            16.625,
+            17.25,
+            17.875,
+            18.5,
+            19.125,
+            19.75,
+            20.375,
+            21.0,
+            21,
+            19.25,
+            17.5,
+            15.75,
+            14.0,
+            14,
+            14.286,
+            14.571,
+            14.857,
+            15.143,
+            15.429,
+            15.714,
+            16.0,
+            16,
+            16.667,
+            17.333,
+            18.0,
+            18
+          ]
+        ],
+        colors: {
+          Bolsonaro: '#6973ad',
+          Lula: '#fd6166',
+          Ciro: '#c05b5e',
+          Tebet: '#fece43',
+          Outros: '#78D2D7',
+          BNI: '#000000'
+        }
+      },
+      axis: {
+        x: {
+          type: 'timeseries',
+          tick: {
+            format: d3.timeFormat('%d/%b'),
+            values: ['2022-03-05', '2022-03-15', '2022-03-30', '2022-04-15', '2022-04-30', '2022-05-10']
+          }
+        },
+        y: {
+          padding: {
+            bottom: 11
+          },
+          tick: {
+            count: 4,
+            values: [0, 15, 30, 45]
+          }
+        }
+      },
+      size: {
+        width: 700,
+        height: 500
+      },
+      grid: {
+        y: {
+          show: true
+        }
+      }
+    })
+
+  </script>
+</body>
+
+</html>
